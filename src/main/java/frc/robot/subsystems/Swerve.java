@@ -13,8 +13,11 @@ import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
 
-public class Swerve extends SubsystemBase {
+
+  public class Swerve extends SubsystemBase {
   // private final ADIS16470_IMU gyro;
   private final AHRS gyro;
 
@@ -36,6 +39,8 @@ public class Swerve extends SubsystemBase {
           new SwerveModule(2, Constants.Swerve.Mod2.constants),
           new SwerveModule(3, Constants.Swerve.Mod3.constants)
         };
+        //A pnuematic contorlled lever that controls weither or not a device is powered
+        DoubleSolenoid solenoidSwitch = new DoubleSolenoid(9, PneumaticsModuleType.REVPH, 4, 5);
     swerveOdometry =
         new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getYaw(), getPositions());
 

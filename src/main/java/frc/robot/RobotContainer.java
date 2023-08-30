@@ -87,7 +87,16 @@ public class RobotContainer {
             s_Intake));
 
     // Configure the button bindings
-    configureButtonBindings();
+    configureButtonBindings(
+//  if (gamepad.getRawButton(1)){
+//     solenoidSwitch.set(kForward);
+  
+//  }
+// if (gamepad.getRawButton(1) && solenoidSwitch.set(kForward) == true){
+    
+//     solenoidSwitch.set(kReverse);
+// }
+    );
   }
 
   /**

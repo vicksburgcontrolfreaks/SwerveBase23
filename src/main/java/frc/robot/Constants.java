@@ -15,7 +15,7 @@ public final class Constants {
     public static final double normalDriveSpeedMultiplier = 0.6;
     public static final double slowDriveSpeedMultiplier = 0.2;
 
-    public static final double stickDeadband = 0.1;
+    public static final double stickDeadband = 0.10;
 
     public static final boolean invertGyro = true; // Always ensure Gyro is CCW+ CW-
 
