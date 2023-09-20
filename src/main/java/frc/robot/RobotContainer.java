@@ -100,14 +100,13 @@ public class RobotContainer {
   private void configureButtonBindings() {
     // Drivetrain controls
     zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
-
+//Based of direction on small black jostick dpad on top of main controller turns the robot to its corresponidng robot centric angle
     new POVButton(driver, 0).whileTrue(new TurnToAngleCommand(s_Swerve, 180, 2));
     new POVButton(driver, 90).whileTrue(new TurnToAngleCommand(s_Swerve, 90, 2));
     new POVButton(driver, 180).whileTrue(new TurnToAngleCommand(s_Swerve, 0, 2));
     new POVButton(driver, 270).whileTrue(new TurnToAngleCommand(s_Swerve, -90, 2));
 
     new JoystickButton(driver, 6).whileTrue(new RunCommand(() -> s_Swerve.setX(), s_Swerve));
-
     // new POVButton(gamepad, 270).whileTrue(new SelfBalanceCommand(s_Swerve));
 
     // new JoystickButton(gamepad, XboxController.Button.kA.value)
