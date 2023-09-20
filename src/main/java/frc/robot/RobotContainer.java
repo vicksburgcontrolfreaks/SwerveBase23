@@ -96,6 +96,7 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
+  //Activates all Teleop commads based of button pressed 
   private void configureButtonBindings() {
     // Drivetrain controls
     zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));

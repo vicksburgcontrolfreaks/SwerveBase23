@@ -43,7 +43,7 @@ import edu.wpi.first.wpilibj.PneumaticsModuleType;
         DoubleSolenoid solenoidSwitch = new DoubleSolenoid(9, PneumaticsModuleType.REVPH, 4, 5);
     swerveOdometry =
         new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getYaw(), getPositions());
-
+//Activate odemetry by getting a 2d image of field 
     field = new Field2d();
     SmartDashboard.putData("Field", field);
   }
