@@ -22,7 +22,7 @@ import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 import frc.robot.subsystems.IntakeSubsystem.GamePiece;
 import frc.robot.subsystems.LimelightSubsystem;
-
+import frc.robot.subsystems.LED;
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -53,6 +53,9 @@ public class RobotContainer {
   public final LimelightSubsystem m_limelight = new LimelightSubsystem();
   public final ElevatorSubsystem s_elevator = new ElevatorSubsystem();
   public final WristSubsystem s_wrist = new WristSubsystem();
+  public final LED led = new LED(); 
+  //   LED LED LED LED LED LED LED LED LED LED LED LED LED 
+
   // public final EntireArmSubsystem s_EntireArm = new EntireArmSubsystem();
 
   public final IntakeSubsystem s_Intake = new IntakeSubsystem();
@@ -64,6 +67,7 @@ public class RobotContainer {
 
     m_limelight.turnOnDriverCam();
     m_limelight.enableLimelight(false);
+    
 
     s_Swerve.setDefaultCommand(
         new TeleopSwerve(
@@ -87,7 +91,13 @@ public class RobotContainer {
             s_Intake));
 
     // Configure the button bindings
+
+    // configureButtonBindings(
+
+    // ); Not clear on what this does 
+=======
     configureButtonBindings();
+
   }
 
   /**
@@ -104,9 +114,16 @@ public class RobotContainer {
     new POVButton(driver, 90).whileTrue(new TurnToAngleCommand(s_Swerve, 90, 2));
     new POVButton(driver, 180).whileTrue(new TurnToAngleCommand(s_Swerve, 0, 2));
     new POVButton(driver, 270).whileTrue(new TurnToAngleCommand(s_Swerve, -90, 2));
-
+    new LED();
+//     if (gamepad.getRawButton(1)){
+//      solenoidSwitch.set(kForward);
+  
+//   }
+//  if (gamepad.getRawButton(1) && solenoidSwitch.set(kForward) == true){
+//      solenoidSwitch.set(kReverse);
+//  }
     new JoystickButton(driver, 6).whileTrue(new RunCommand(() -> s_Swerve.setX(), s_Swerve));
-
+     
     // new POVButton(gamepad, 270).whileTrue(new SelfBalanceCommand(s_Swerve));
 
     // new JoystickButton(gamepad, XboxController.Button.kA.value)
