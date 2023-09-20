@@ -60,7 +60,7 @@ public class RobotContainer {
 
   public final IntakeSubsystem s_Intake = new IntakeSubsystem();
 
-  /** The container for the robot. Contains subsystems, OI devices, and commands. */
+  /** The container for the robot. Contains subsystems, IO devices, and commands. */
   public RobotContainer() {
 
     CameraServer.startAutomaticCapture();
@@ -91,9 +91,13 @@ public class RobotContainer {
             s_Intake));
 
     // Configure the button bindings
+
     // configureButtonBindings(
 
     // ); Not clear on what this does 
+=======
+    configureButtonBindings();
+
   }
 
   /**
