@@ -41,7 +41,7 @@ public class RobotContainer {
   private final int translationAxis = Joystick.AxisType.kY.value;
   private final int strafeAxis = Joystick.AxisType.kX.value;
   private final int rotationAxis = Joystick.AxisType.kTwist.value;
-   private double IHATEGITHUB;
+   private double IHEARTGITHUB;
   /* Driver Buttons */
   private final JoystickButton zeroGyro = new JoystickButton(driver, 5);
   private final JoystickButton robotCentric = new JoystickButton(driver, 3);
