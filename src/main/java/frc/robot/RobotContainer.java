@@ -32,6 +32,7 @@ import frc.robot.subsystems.LED;
 public class RobotContainer {
 
   /* Controllers */
+  boolean mitchell;
   private final Joystick gamepad = new Joystick(0);
   private final Joystick driver = new Joystick(1);
   private final Joystick buttonBox = new Joystick(2);
@@ -40,7 +41,7 @@ public class RobotContainer {
   private final int translationAxis = Joystick.AxisType.kY.value;
   private final int strafeAxis = Joystick.AxisType.kX.value;
   private final int rotationAxis = Joystick.AxisType.kTwist.value;
-
+   private double IHATEGITHUB;
   /* Driver Buttons */
   private final JoystickButton zeroGyro = new JoystickButton(driver, 5);
   private final JoystickButton robotCentric = new JoystickButton(driver, 3);
