@@ -43,16 +43,13 @@ import edu.wpi.first.wpilibj.PneumaticsModuleType;
         DoubleSolenoid solenoidSwitch = new DoubleSolenoid(9, PneumaticsModuleType.REVPH, 4, 5);
     swerveOdometry =
         new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getYaw(), getPositions());
-//Activate odemetry by getting a 2d image of field 
     field = new Field2d();
     SmartDashboard.putData("Field", field);
   }
-
   public void drive(
-      Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLoop) {
+Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLoop) {
     SwerveModuleState[] swerveModuleStates =
-        Constants.Swerve.swerveKinematics.toSwerveModuleStates(
-            fieldRelative
+        Constants.Swerve.swerveKinematics.toSwerveModuleStates(fieldRelative
                 ? ChassisSpeeds.fromFieldRelativeSpeeds(
                     translation.getX(), translation.getY(), rotation, getYaw())
                 : new ChassisSpeeds(translation.getX(), translation.getY(), rotation));
@@ -62,7 +59,6 @@ import edu.wpi.first.wpilibj.PneumaticsModuleType;
       mod.setDesiredState(swerveModuleStates[mod.moduleNumber], isOpenLoop);
     }
   }
-
   /* Used by SwerveControllerCommand in Auto */
   public void setModuleStates(SwerveModuleState[] desiredStates) {
     SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, Constants.Swerve.maxSpeed);
@@ -71,7 +67,6 @@ import edu.wpi.first.wpilibj.PneumaticsModuleType;
       mod.setDesiredState(desiredStates[mod.moduleNumber], false); // false
     }
   }
-
   public Pose2d getPose() {
     SmartDashboard.putNumber("pose X", swerveOdometry.getPoseMeters().getX());
     SmartDashboard.putNumber("pose Y", swerveOdometry.getPoseMeters().getY());
@@ -95,7 +90,7 @@ import edu.wpi.first.wpilibj.PneumaticsModuleType;
   }
 
   public SwerveModuleState[] getStates() {
-    SwerveModuleState[] states = new SwerveModuleState[4];
+    SwerveModuleState[] states = new SwerveModuleState[4];//4
     for (SwerveModule mod : mSwerveMods) {
       states[mod.moduleNumber] = mod.getState();
     }
@@ -103,14 +98,13 @@ import edu.wpi.first.wpilibj.PneumaticsModuleType;
   }
 
   public SwerveModulePosition[] getPositions() {
-    SwerveModulePosition[] positions = new SwerveModulePosition[4];
+    SwerveModulePosition[] positions = new SwerveModulePosition[4];//4
     for (SwerveModule mod : mSwerveMods) {
       SmartDashboard.putNumber(
           "position: module " + mod.moduleNumber, mod.getPosition().distanceMeters);
       SmartDashboard.putNumber(
           "angle: module " + mod.moduleNumber, mod.getPosition().angle.getDegrees());
-      positions[mod.moduleNumber] = mod.getPosition();
-    }
+      positions[mod.moduleNumber] = mod.getPosition();}
     return positions;
   }
 
@@ -121,8 +115,7 @@ import edu.wpi.first.wpilibj.PneumaticsModuleType;
   public Rotation2d getYaw() {
     return (Constants.Swerve.invertGyro)
         ? Rotation2d.fromDegrees(360 - gyro.getAngle())
-        : Rotation2d.fromDegrees(gyro.getAngle());
-  }
+        : Rotation2d.fromDegrees(gyro.getAngle());}
 
   public double getYawRate() {
     return gyro.getRawGyroZ();
@@ -155,7 +148,7 @@ import edu.wpi.first.wpilibj.PneumaticsModuleType;
   // 0-14, drive forward, 346-360 drive backward
 
   public void setX() {
-    mSwerveMods[0].setAngleForX(45);
+    // mSwerveMods[0].setAngleForX(45);
     mSwerveMods[1].setAngleForX(-45);
     mSwerveMods[2].setAngleForX(-45);
     mSwerveMods[3].setAngleForX(45);

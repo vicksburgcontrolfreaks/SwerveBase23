@@ -4,6 +4,13 @@
 
 package frc.robot;
 
+
+import java.util.List;
+import java.util.function.DoubleSupplier;
+import java.util.function.IntSupplier;
+
+import com.fasterxml.jackson.core.util.ByteArrayBuilder;
+
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
@@ -17,7 +24,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.autos.*;
+// import frc.robot.autos.*;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 import frc.robot.subsystems.IntakeSubsystem.GamePiece;
@@ -29,10 +36,13 @@ import frc.robot.subsystems.LED;
  * periodic methods (other than the scheduler calls). Instead, the structure of the robot (including
  * subsystems, commands, and button mappings) should be declared here.
  */
+
+
+
+
 public class RobotContainer {
 
   /* Controllers */
-  boolean mitchell;
   private final Joystick gamepad = new Joystick(0);
   private final Joystick driver = new Joystick(1);
   private final Joystick buttonBox = new Joystick(2);
@@ -41,7 +51,7 @@ public class RobotContainer {
   private final int translationAxis = Joystick.AxisType.kY.value;
   private final int strafeAxis = Joystick.AxisType.kX.value;
   private final int rotationAxis = Joystick.AxisType.kTwist.value;
-   private double IHEARTGITHUB;
+
   /* Driver Buttons */
   private final JoystickButton zeroGyro = new JoystickButton(driver, 5);
   private final JoystickButton robotCentric = new JoystickButton(driver, 3);
@@ -55,13 +65,16 @@ public class RobotContainer {
   public final ElevatorSubsystem s_elevator = new ElevatorSubsystem();
   public final WristSubsystem s_wrist = new WristSubsystem();
   public final LED led = new LED(); 
+  int translation = Joystick.AxisType.kY.value;
+  int strafe = Joystick.AxisType.kX.value;
+  int rotation = Joystick.AxisType.kTwist.value;
   //   LED LED LED LED LED LED LED LED LED LED LED LED LED 
 
   // public final EntireArmSubsystem s_EntireArm = new EntireArmSubsystem();
 
   public final IntakeSubsystem s_Intake = new IntakeSubsystem();
 
-  /** The container for the robot. Contains subsystems, IO devices, and commands. */
+  /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
 
     CameraServer.startAutomaticCapture();
@@ -69,10 +82,12 @@ public class RobotContainer {
     m_limelight.turnOnDriverCam();
     m_limelight.enableLimelight(false);
     
-
     s_Swerve.setDefaultCommand(
         new TeleopSwerve(
             s_Swerve,
+            -driver.getRawAxis(translation),
+            -driver.getRawAxis(strafe),
+            -driver.getRawAxis(rotation),
             () -> -driver.getRawAxis(translationAxis),
             () -> -driver.getRawAxis(strafeAxis),
             () -> -driver.getRawAxis(rotationAxis),
@@ -86,18 +101,15 @@ public class RobotContainer {
     // s_LED.setDefaultCommand(new RunCommand(() -> s_LED.setBlue(), s_LED));
 
     // s_Intake.setDefaultCommand(new RunCommand(() -> s_Intake.runIntake(0), s_Intake));
-    s_Intake.setDefaultCommand(
-        new RunCommand(
-            () -> s_Intake.runIntake(gamepad.getRawAxis(XboxController.Axis.kRightY.value)),
-            s_Intake));
+//    s_Intake.setDefaultCommand(
+//    //     new RunCommand(
+//             () -> s_Intake.runIntake(gamepad.getRawAxis(XboxController.Axis.kRightY.value)),
+//             s_Intake));
 
     // Configure the button bindings
-
     // configureButtonBindings(
 
     // ); Not clear on what this does 
-    configureButtonBindings();
-
   }
 
   /**
@@ -106,11 +118,10 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
-  //Activates all Teleop commads based of button pressed 
   private void configureButtonBindings() {
     // Drivetrain controls
     zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
-//Based of direction on small black jostick dpad on top of main controller turns the robot to its corresponidng robot centric angle
+
     new POVButton(driver, 0).whileTrue(new TurnToAngleCommand(s_Swerve, 180, 2));
     new POVButton(driver, 90).whileTrue(new TurnToAngleCommand(s_Swerve, 90, 2));
     new POVButton(driver, 180).whileTrue(new TurnToAngleCommand(s_Swerve, 0, 2));
@@ -124,6 +135,7 @@ public class RobotContainer {
 //      solenoidSwitch.set(kReverse);
 //  }
     new JoystickButton(driver, 6).whileTrue(new RunCommand(() -> s_Swerve.setX(), s_Swerve));
+     
     // new POVButton(gamepad, 270).whileTrue(new SelfBalanceCommand(s_Swerve));
 
     // new JoystickButton(gamepad, XboxController.Button.kA.value)
@@ -223,19 +235,19 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
-  public Command getAutonomousCommand() {
-    if (buttonBox.getRawButton(3)) {
-      return new AutoPreloadConeChargeStation(this);
-    } else if (buttonBox.getRawButton(4)) {
-      return new AutoPreloadCubeChargeStation(this);
-    } else if (buttonBox.getRawButton(5)) {
-      return new AutoBlueLeftTwoHigh(this);
-    } else if (buttonBox.getRawButton(6)) {
-      return new AutoRedRight(this);
-    } else if (buttonBox.getRawButton(7)) {
-      return new AutoPreloadConeChargeStationPlusCone(this);
-    } else {
-      return new AutoMobility(this);
-    }
-  }
+//   public Command getAutonomousCommand() {
+//     if (buttonBox.getRawButton(3)) {
+//       return new AutoPreloadConeChargeStation(this);
+//     } else if (buttonBox.getRawButton(4)) {
+//       return new AutoPreloadCubeChargeStation(this);
+//     } else if (buttonBox.getRawButton(5)) {
+//       return new AutoBlueLeftTwoHigh(this);
+//     } else if (buttonBox.getRawButton(6)) {
+//       return new AutoRedRight(this);
+//     } else if (buttonBox.getRawButton(7)) {
+//       return new AutoPreloadConeChargeStationPlusCone(this);
+//     } else {
+//       return new AutoMobility(this);
+//     }
+//   }
 }

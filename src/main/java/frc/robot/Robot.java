@@ -20,11 +20,6 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
   private RobotContainer m_robotContainer;
 
-
-
-
-
-  
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -66,7 +61,7 @@ public class Robot extends TimedRobot {
     m_robotContainer.m_limelight.turnOnDriverCam();
     m_robotContainer.m_limelight.enableLimelight(false);
 
-    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+    // m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {

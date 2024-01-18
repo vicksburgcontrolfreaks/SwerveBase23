@@ -3,6 +3,7 @@ package frc.robot.commands;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.Swerve;
@@ -10,6 +11,7 @@ import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 
 public class TeleopSwerve extends CommandBase {
+    double counter;
   private Swerve s_Swerve;
   private DoubleSupplier translationSup;
   private DoubleSupplier strafeSup;
@@ -24,24 +26,30 @@ public class TeleopSwerve extends CommandBase {
 
   public TeleopSwerve(
       Swerve s_Swerve,
+      Double translationRationilized,
+      Double strafeRationilize,
+      Double rotationRationilized ,
       DoubleSupplier translationSup,
       DoubleSupplier strafeSup,
       DoubleSupplier rotationSup,
       BooleanSupplier robotCentricSup,
       BooleanSupplier slowSpeedSup,
-      BooleanSupplier highSpeedSup) {
+      BooleanSupplier highSpeedSup
+  ) {
     this.s_Swerve = s_Swerve;
     addRequirements(s_Swerve);
-
     this.translationSup = translationSup;
     this.strafeSup = strafeSup;
     this.rotationSup = rotationSup;
     this.robotCentricSup = robotCentricSup;
     this.slowSpeedSup = slowSpeedSup;
     this.highSpeedSup = highSpeedSup;
+        SmartDashboard.putNumber("translation " , translationRationilized);
+        SmartDashboard.putNumber("strafe " , strafeRationilize);
+    SmartDashboard.putNumber("rotation " , rotationRationilized);
   }
 
-  @Override
+@Override
   public void execute() {
 
     double speedMultiplier = Constants.Swerve.normalDriveSpeedMultiplier;
@@ -63,7 +71,6 @@ public class TeleopSwerve extends CommandBase {
             speedMultiplier
                 * MathUtil.applyDeadband(
                     rotationSup.getAsDouble(), Constants.Swerve.stickDeadband));
-
     /* Drive */
     s_Swerve.drive(
         new Translation2d(translationVal, strafeVal).times(Constants.Swerve.maxSpeed),
