@@ -35,7 +35,7 @@ public class SwerveModule {
 
   private final SparkMaxPIDController driveController;
   private final SparkMaxPIDController angleController;
-
+  private double derectionControl;
   private final SimpleMotorFeedforward feedforward =
       new SimpleMotorFeedforward(
           Constants.Swerve.driveKS, Constants.Swerve.driveKV, Constants.Swerve.driveKA);
@@ -43,7 +43,11 @@ public class SwerveModule {
   public SwerveModule(int moduleNumber, SwerveModuleConstants moduleConstants) {
     this.moduleNumber = moduleNumber;
     angleOffset = moduleConstants.angleOffset;
+ if (moduleNumber == 0){
 
+ } else {
+  
+ }
     /* Angle Encoder Config */
     angleEncoder = new CANCoder(moduleConstants.cancoderID);
     configAngleEncoder();
@@ -67,9 +71,11 @@ public class SwerveModule {
     // Custom optimize command, since default WPILib optimize assumes continuous controller which
     // REV and CTRE are not
     desiredState = OnboardModuleState.optimize(desiredState, getState().angle);
-
+    int currentModuleNumber= this.moduleNumber;
+    if (currentModuleNumber != 0){
     setAngle(desiredState);
     setSpeed(desiredState, isOpenLoop);
+    }
   }
 
   private void resetToAbsolute() {
